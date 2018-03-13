@@ -1,14 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      iBeacon hmmm...Bacon :)
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-</ion-content>
+    <h1> Platform is {{platformName}}</h1>
+    <button ion-button (click)="btnStartScanning()">Start Scanning</button>
+    <!-- define the whole row as a button so the user can select and click it-->
+    <!-- Loop over all data in array defined in type script part with *ngFor-->
+    <ion-item *ngFor="let beacon of beaconList">
+      <ion-avatar item-left>
+        <ion-icon name="wifi"></ion-icon>
+      </ion-avatar>
+        <h1>Beacon UUID: {{beacon.id}}</h1>
+        <h1>Beacon Signal: {{beacon.signal}}</h1>
+    </ion-item>
+  </ion-content>

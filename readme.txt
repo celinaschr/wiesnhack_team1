@@ -15,4 +15,6 @@
     - Current iBeacon plugin version not working with Android 8 (Oreo)
     - iBeacon Wrapper not working with Android 8 + 7
     - View not updating when not using zones and iBeacon delegate functions
+    - When connected to an other active / running Bluetooth device
+        (e.g. listen musik withe BT headphones) beacons won't show up
 }

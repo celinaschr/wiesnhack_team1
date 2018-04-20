@@ -9,6 +9,10 @@
 <ion-content padding>
     <ion-item>
       <button ion-button (click)=" btnRestCall()">Make REST Call</button>
+      <ion-item *ngFor="let comment of restApi.resultComments">
+            <h1>User: {{comment.email}}</h1>
+            <h1>Comment: {{comment.body}}</h1>
+        </ion-item>
     </ion-item>
     <ion-item>
       <h2> Platform is {{beaconScanner.platformName}}</h2>

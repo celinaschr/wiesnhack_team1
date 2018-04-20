@@ -1,3 +1,4 @@
+import { RestApiProvider } from './../../providers/rest-api/rest-api';
 import { BeaconScannerProvider } from './../../providers/beacon-scanner/beacon-scanner';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -16,7 +17,8 @@ export class HomePage
   constructor(
     public navCtrl: NavController,
     public NavParams:NavParams,
-    public beaconScanner:BeaconScannerProvider) 
+    public beaconScanner:BeaconScannerProvider,
+    public restApi:RestApiProvider) 
   {  
   }
 
@@ -25,6 +27,12 @@ export class HomePage
   {
     this.beaconScanner.platformDetection();
     console.debug("Started scanning for beacons");
+  }
+
+  btnRestCall()
+  {
+    this.restApi.restCall();
+    console.debug("Rest call executed");
   }
 
 }

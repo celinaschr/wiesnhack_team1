@@ -1,4 +1,4 @@
-//import { RestApiProvider } from './../../providers/rest-api/rest-api';
+import { RestApiProvider } from './../../providers/rest-api/rest-api';
 import { BeaconScannerProvider } from './../../providers/beacon-scanner/beacon-scanner';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -14,8 +14,7 @@ export class HomePage {
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
-    //public restApi:RestApiProvider) 
-  )
+    public restApi:RestApiProvider) 
   {  
   }
 
@@ -28,7 +27,7 @@ export class HomePage {
 
   btnRestCall()
   {
-    //this.restApi.restCall();
+    this.restApi.restCall();
     console.debug("Rest call executed");
   }
 }

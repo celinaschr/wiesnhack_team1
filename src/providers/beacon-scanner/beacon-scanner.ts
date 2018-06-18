@@ -1,8 +1,7 @@
-import { Beacon } from './../../../../PublicHackathon/src/interfaces/beacon';
 import { Platform } from 'ionic-angular';
 import { IBeacon, IBeaconPluginResult, BeaconRegion } from '@ionic-native/ibeacon';
 import { Injectable, NgZone } from '@angular/core';
-import { BeaconModel } from './../../interfaces/beaconModel';
+import { Beacon } from './../../interfaces/beaconModel';
 
 
 //enable cordova platform in this context (used to access wildcard UUID)
@@ -12,7 +11,7 @@ declare var cordova: any;
 export class BeaconScannerProvider {
 
   platformName: string = "Not initialized";
-  beaconList: BeaconModel[] = [];
+  beaconList: Beacon[] = [];
 
   constructor(
     private beacon: IBeacon,
@@ -122,7 +121,7 @@ export class BeaconScannerProvider {
 
   cleanBeaconList() {
     while (this.beaconList.length > 0) {
-      var b = this.beaconList.pop();
+      this.beaconList.pop();
     }
   }
 }

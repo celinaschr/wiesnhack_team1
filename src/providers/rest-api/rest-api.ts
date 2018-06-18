@@ -1,4 +1,4 @@
-import { CommentModel } from './../../interfaces/commentModel';
+import { Comment } from './../../interfaces/commentModel';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -8,7 +8,7 @@ export class RestApiProvider
 {
   testApi:string ="https://jsonplaceholder.typicode.com/comments?postId=1";
   restResult:Observable<any>;
-  resultComments:CommentModel[] = [];
+  resultComments:Comment[] = [];
 
   constructor(public client: HttpClient) 
   {    
@@ -17,7 +17,7 @@ export class RestApiProvider
 
   restCall()
   {
-    this.restResult = this.client.get<CommentModel>(this.testApi, {responseType:'json'});
+    this.restResult = this.client.get<Comment>(this.testApi, {responseType:'json'});
     this.restResult.subscribe(data => 
       {
         this.resultComments = data;

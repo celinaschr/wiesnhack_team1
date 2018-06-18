@@ -1,11 +1,16 @@
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+
+//iBeacon import
+import { IBeacon } from '@ionic-native/ibeacon';
+
+//custom providers
 import { BeaconScannerProvider } from '../providers/beacon-scanner/beacon-scanner';
 import { RestApiProvider } from './../providers/rest-api/rest-api';
 
@@ -16,8 +21,7 @@ import { RestApiProvider } from './../providers/rest-api/rest-api';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpClientModule
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -27,6 +31,7 @@ import { RestApiProvider } from './../providers/rest-api/rest-api';
   providers: [
     StatusBar,
     SplashScreen,
+    IBeacon,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BeaconScannerProvider,
     RestApiProvider

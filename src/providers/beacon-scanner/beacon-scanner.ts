@@ -1,8 +1,8 @@
+import { RestApiProvider } from './../rest-api/rest-api';
 import { Platform } from 'ionic-angular';
 import { IBeacon, IBeaconPluginResult, BeaconRegion } from '@ionic-native/ibeacon';
 import { Injectable, NgZone } from '@angular/core';
 import { Beacon } from './../../interfaces/beaconModel';
-
 
 //enable cordova platform in this context (used to access wildcard UUID)
 declare var cordova: any;
@@ -16,7 +16,8 @@ export class BeaconScannerProvider {
   constructor(
     private beacon: IBeacon,
     public platform: Platform,
-    public zone: NgZone) {
+    public zone: NgZone,
+    private rest:RestApiProvider) {
     this.enableDebugLogs();
   }
 
@@ -64,9 +65,23 @@ export class BeaconScannerProvider {
 
     delegate.didRangeBeaconsInRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => {
-        console.debug("iBeacon frame received from " + pluginResult.beacons.length + " beacons");
-
-        this.beaconRepopulateList(scope, pluginResult);
+        for(let i=0; i < pluginResult.beacons.length; i++)
+        {
+          //Register Case
+          if(pluginResult.beacons[i].rssi >= -85)
+          {
+            console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
+            this.beaconRepopulateList(scope, pluginResult);
+            this.rest.registerUserInRoom("Beacon User",pluginResult.beacons[i].uuid);
+          }
+          //Deregister Case
+          else
+          {
+            console.debug("Beacon " + pluginResult.beacons[i].uuid + " far away");
+            this.beaconRepopulateList(scope, pluginResult);
+            this.rest.deregisterUser("Beacon User");
+          }
+        }
       },
       (error: any) => console.error(`Failure during ranging: `, error)
     );
@@ -74,16 +89,16 @@ export class BeaconScannerProvider {
 
     delegate.didEnterRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => {
-        console.log('A beacon entered the region: ', pluginResult);
+        if(pluginResult.beacons.length >0)
+          console.debug("Beacon " + pluginResult.beacons[0].uuid +" ENTERED the ranging region");
       }
     );
     console.debug("didEnterRegion subscribed");
 
     delegate.didExitRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => {
-        console.log('A beacon left the region: ', pluginResult);
-        this.beaconRepopulateList(scope, pluginResult);
-
+        if(pluginResult.beacons.length >0)
+          console.debug("Beacon " + pluginResult.beacons[0].uuid +" LEFT the ranging region");
       }
     );
     console.debug("didExitRegion subscribed");

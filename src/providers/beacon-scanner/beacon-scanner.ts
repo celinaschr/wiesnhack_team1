@@ -1,6 +1,6 @@
 import { RestApiProvider } from './../rest-api/rest-api';
 import { Platform } from 'ionic-angular';
-import { IBeacon, IBeaconPluginResult, BeaconRegion } from '@ionic-native/ibeacon';
+import { IBeacon, IBeaconPluginResult, BeaconRegion, IBeaconDelegate } from '@ionic-native/ibeacon';
 import { Injectable, NgZone } from '@angular/core';
 import { Beacon } from './../../interfaces/beaconModel';
 
@@ -41,29 +41,40 @@ export class BeaconScannerProvider {
   }
 
   iBeaconScanner() {
-    //Save the current scope in order to use it in delegate functions
-    var scope = this;
-
     // Request permission to use location on iOS
     this.beacon.requestAlwaysAuthorization();
     console.debug("iOS permissions requested");
 
     // create a new delegate and register it with the native layer
     let delegate = this.beacon.Delegate();
-    console.debug("delegate created");
+    console.debug("Beacon delegate created");
 
-    let beaconRegion = this.beacon.BeaconRegion('SomeBeacon', cordova.plugins.locationManager.BeaconRegion.WILDCARD_UUID);
-    //let beaconRegion = this.beacon.BeaconRegion('deskBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
-    console.debug("beaconRegion created");
+    let region = this.beacon.BeaconRegion('SomeBeacon', cordova.plugins.locationManager.BeaconRegion.WILDCARD_UUID);
+    console.debug("Beacon region created with wildcard id");
+    //let region = this.beacon.BeaconRegion('deskBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
 
     // Subscribe to some of the delegate's event handlers
-    delegate.didStartMonitoringForRegion().subscribe(
+    this.registerEventEnterRegion(delegate);
+    this.registerEventExitRegion(delegate);
+    this.registerEventsRangeBeaconInRegion(delegate);
+
+    //Start
+    this.startMonitoringForRegion(region);
+    this.startMonitoringBeacons(region);
+  }
+
+  registerEventStartMonitoringForRegion(del:IBeaconDelegate)
+  {
+    del.didStartMonitoringForRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => console.log('didStartMonitoringForRegion: ', pluginResult),
       (error: any) => console.error(`Failure during starting of monitoring: `, error)
     );
     console.debug("didStartMonitoringForRegion subscribed");
+  }
 
-    delegate.didRangeBeaconsInRegion().subscribe(
+  registerEventsRangeBeaconInRegion(del:IBeaconDelegate)
+  {
+    del.didRangeBeaconsInRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => {
         for(let i=0; i < pluginResult.beacons.length; i++)
         {
@@ -71,14 +82,14 @@ export class BeaconScannerProvider {
           if(pluginResult.beacons[i].rssi >= -85)
           {
             console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
-            this.beaconRepopulateList(scope, pluginResult);
+            this.beaconRepopulateList(this, pluginResult);
             this.rest.registerUserInRoom("Beacon User",pluginResult.beacons[i].uuid);
           }
           //Deregister Case
           else
           {
             console.debug("Beacon " + pluginResult.beacons[i].uuid + " far away");
-            this.beaconRepopulateList(scope, pluginResult);
+            this.beaconRepopulateList(this, pluginResult);
             this.rest.deregisterUser("Beacon User");
           }
         }
@@ -86,32 +97,48 @@ export class BeaconScannerProvider {
       (error: any) => console.error(`Failure during ranging: `, error)
     );
     console.debug("didRangeBeaconsInRegion subscribed");
+  }
 
-    delegate.didEnterRegion().subscribe(
-      (pluginResult: IBeaconPluginResult) => {
-        if(pluginResult.beacons.length >0)
-          console.debug("Beacon " + pluginResult.beacons[0].uuid +" ENTERED the ranging region");
+  registerEventEnterRegion(del:IBeaconDelegate)
+  {
+    del.didEnterRegion().subscribe(
+      (pluginResult: IBeaconPluginResult) =>
+      {
+        if(pluginResult.region.identifier)
+          console.debug("ENTERED region " + pluginResult.region.identifier);
       }
     );
     console.debug("didEnterRegion subscribed");
+  }
 
-    delegate.didExitRegion().subscribe(
-      (pluginResult: IBeaconPluginResult) => {
-        if(pluginResult.beacons.length >0)
-          console.debug("Beacon " + pluginResult.beacons[0].uuid +" LEFT the ranging region");
+  registerEventExitRegion(del:IBeaconDelegate)
+  {
+    del.didExitRegion().subscribe(
+      (pluginResult: IBeaconPluginResult) =>
+      {
+        if(pluginResult.region.identifier)
+        console.debug("LEFT region " + pluginResult.region.identifier);
       }
     );
     console.debug("didExitRegion subscribed");
-
-    this.beaconStartListening(beaconRegion);
   }
 
-  beaconStartListening(region: BeaconRegion) {
+  startMonitoringForRegion(region: BeaconRegion)
+  {
     this.beacon.startMonitoringForRegion(region).then(
-      () => console.log('Native layer recieved the request to monitoring'),
-      (error: any) => console.error('Native layer failed to begin monitoring: ', error)
+      () =>
+      {
+        console.log('Native layer recieved the request to monitoring')
+      },
+      (error: any) =>
+      {
+        console.error('Native layer failed to begin monitoring: ', error)
+      }
     );
+  }
 
+  startMonitoringBeacons(region: BeaconRegion)
+  {
     this.beacon.startRangingBeaconsInRegion(region)
       .then(() => {
         console.log(`Started ranging beacon region: `, region);

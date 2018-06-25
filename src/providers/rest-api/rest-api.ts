@@ -1,5 +1,5 @@
-import { Comment } from './../../interfaces/commentModel';
-import { HttpClient } from '@angular/common/http';
+import { User } from './../../interfaces/userModel';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -7,40 +7,62 @@ import { Observable } from 'rxjs/Observable';
 export class RestApiProvider
 {
   urlGetAllUsersInRooms:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
-  urlRegisterUserInRoom:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Melanie Bertsch&beaconId=ACFD065E-C3C0-11E3-9BBE-1A514932AC02";
-  urlDeregisterUser:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Melanie Bertsch";
-  
-  testApi:string ="https://jsonplaceholder.typicode.com/comments?postId=1";
+  urlRegisterUserInRoom:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Peep&beaconId=ACFD065E-C3C0-11E3-9BBE-1A514932AC02";
+  urlDeregisterUser:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Peep";
+
   restResult:Observable<any>;
-  resultComments:Comment[] = [];
+  resultUsers:User[] = [];
 
   constructor(public client: HttpClient){}
 
-  restCall()
+  getAllUsersInRooms()
   {
-    this.restResult = this.client.get<Comment>(this.testApi, {responseType:'json'});
+    this.restResult = this.client.get<User>(this.urlGetAllUsersInRooms, {responseType:'json'});
     this.restResult.subscribe(data =>
       {
-        this.resultComments = data;
-        console.debug('Received comments: ', this.resultComments.length);
-        this.resultComments.forEach(element => {
-          console.debug('Email :',element.email);
-        });
+        this.resultUsers = data;
+        console.debug("Received " + this.resultUsers.length + " users");
+        // this.resultUsers.forEach(element => {
+        //   console.debug("User Name : "+element.userId);
+        // });
       })
   }
-
-  getAllUsersInRooms()
-  {}
 
   registerUserInRoom(userId:string,beaconId:string)
   {
 
+    console.debug("Trying to register user "+userId+" on beacon " + beaconId);
+
+    let headers = new HttpHeaders();
+    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+
+    let httpParams = new HttpParams()
+    .append("userId", userId)
+    .append("beaconId", beaconId);
+
+    let url  = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
+
+    this.client.post(url,"null",{headers:headers,params:httpParams}).subscribe(data =>
+      {
+        console.debug("Post sent");
+      });
   }
 
   deregisterUser(userId:string)
   {
+    console.debug("Trying to deregister user "+userId);
 
+    let headers = new HttpHeaders();
+    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
 
+    let httpParams = new HttpParams()
+    .append("userId", userId);
+
+    let url  = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
+    this.client.delete(url,{headers:headers,params:httpParams}).subscribe(data =>
+      {
+        console.debug("Delete sent");
+      });
   }
 
 }

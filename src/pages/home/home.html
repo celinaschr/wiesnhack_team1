@@ -8,10 +8,14 @@
 
 <ion-content padding>
   <ion-item>
+      <ion-label color="primary">Your Name</ion-label>
+      <ion-input [(ngModel)]="userName"></ion-input>
+  </ion-item>
+  <ion-item>
     <button ion-button (click)=" btnRestCall()">Make REST Call</button>
-    <ion-item *ngFor="let comment of restApi.resultComments">
-      <h1>User: {{comment.email}}</h1>
-      <h1>Comment: {{comment.body}}</h1>
+    <ion-item *ngFor="let user of restApi.resultUsers">
+      <h1>User: {{user.userId}}</h1>
+      <h1>Room: {{user.roomName}}</h1>
     </ion-item>
   </ion-item>
   <ion-item>

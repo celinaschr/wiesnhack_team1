@@ -10,12 +10,37 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
+  userName:string;
+
   constructor(
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
-    public restApi:RestApiProvider) 
-  {  
+    public restApi:RestApiProvider)
+  {
+    this.userName = "Peep";
+  }
+
+  //Init interval funtions on view load
+  ionViewDidLoad(){
+    //start scanning
+    this.beaconScanner.platformDetection();
+    //console.debug("View did load Home.ts");
+    setInterval(()=>this.intervalFunction(),5000);
+  }
+
+  intervalFunction()
+  {
+    if(this.beaconScanner.beaconList.length > 0)
+    {
+      this.restApi.registerUserInRoom(this.userName,this.beaconScanner.beaconList[0].id);
+    }
+    else
+    {
+      this.restApi.deregisterUser(this.userName);
+    }
+
+    this.restApi.getAllUsersInRooms();
   }
 
   //Use provider to start sensing beacons
@@ -27,7 +52,7 @@ export class HomePage {
 
   btnRestCall()
   {
-    this.restApi.restCall();
+    this.restApi.getAllUsersInRooms();
     console.debug("Rest call executed");
   }
 }

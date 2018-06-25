@@ -1,4 +1,3 @@
-import { RestApiProvider } from './../rest-api/rest-api';
 import { Platform } from 'ionic-angular';
 import { IBeacon, IBeaconPluginResult, BeaconRegion, IBeaconDelegate } from '@ionic-native/ibeacon';
 import { Injectable, NgZone } from '@angular/core';
@@ -16,8 +15,7 @@ export class BeaconScannerProvider {
   constructor(
     private beacon: IBeacon,
     public platform: Platform,
-    public zone: NgZone,
-    private rest:RestApiProvider) {
+    public zone: NgZone) {
     this.enableDebugLogs();
   }
 
@@ -83,14 +81,10 @@ export class BeaconScannerProvider {
           {
             console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
             this.beaconRepopulateList(this, pluginResult);
-            this.rest.registerUserInRoom("Beacon User",pluginResult.beacons[i].uuid);
           }
-          //Deregister Case
           else
           {
-            console.debug("Beacon " + pluginResult.beacons[i].uuid + " far away");
-            this.beaconRepopulateList(this, pluginResult);
-            this.rest.deregisterUser("Beacon User");
+            this.cleanBeaconList();
           }
         }
       },

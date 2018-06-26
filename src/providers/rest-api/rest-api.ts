@@ -6,9 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class RestApiProvider
 {
-  urlGetAllUsersInRooms:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
-  urlRegisterUserInRoom:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Peep&beaconId=ACFD065E-C3C0-11E3-9BBE-1A514932AC02";
-  urlDeregisterUser:string = "http://peoplecontrollerapi.azurewebsites.net/api/Position?userId=Peep";
+  serviceUrl = "https://peoplecontrollerapi.azurewebsites.net/api/Position";
 
   restResult:Observable<any>;
   resultUsers:User[] = [];
@@ -17,7 +15,7 @@ export class RestApiProvider
 
   getAllUsersInRooms()
   {
-    this.restResult = this.client.get<User>(this.urlGetAllUsersInRooms, {responseType:'json'});
+    this.restResult = this.client.get<User>(this.serviceUrl, {responseType:'json'});
     this.restResult.subscribe(data =>
       {
         this.resultUsers = data;
@@ -40,9 +38,7 @@ export class RestApiProvider
     .append("userId", userId)
     .append("beaconId", beaconId);
 
-    let url  = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
-
-    this.client.post(url,"null",{headers:headers,params:httpParams}).subscribe(data =>
+    this.client.post(this.serviceUrl,"null",{headers:headers,params:httpParams}).subscribe(data =>
       {
         console.debug("Post sent");
       });
@@ -58,8 +54,7 @@ export class RestApiProvider
     let httpParams = new HttpParams()
     .append("userId", userId);
 
-    let url  = "http://peoplecontrollerapi.azurewebsites.net/api/Position";
-    this.client.delete(url,{headers:headers,params:httpParams}).subscribe(data =>
+    this.client.delete(this.serviceUrl,{headers:headers,params:httpParams}).subscribe(data =>
       {
         console.debug("Delete sent");
       });

@@ -1,34 +1,37 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      iBeacon hmmm...Bacon :)
+      Track me if you can!
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
-      <ion-label color="primary">Your Name</ion-label>
+      <ion-label color="primary">Type your name</ion-label>
       <ion-input [(ngModel)]="userName"></ion-input>
   </ion-item>
   <ion-item>
-    <button ion-button (click)=" btnRestCall()">Make REST Call</button>
+    <!-- <button ion-button (click)=" btnRestCall()">Make REST Call</button> -->
     <ion-item *ngFor="let user of restApi.resultUsers">
+        <ion-avatar item-left>
+            <ion-icon name="ios-contact"></ion-icon>
+          </ion-avatar>
       <h1>User: {{user.userId}}</h1>
       <h1>Room: {{user.roomName}}</h1>
     </ion-item>
   </ion-item>
   <ion-item>
     <h2> Platform is {{beaconScanner.platformName}}</h2>
-    <button ion-button (click)="btnStartScanning()">Start Scanning</button>
+    <!-- <button ion-button (click)="btnStartScanning()">Start Scanning</button> -->
     <!-- define the whole row as a button so the user can select and click it-->
     <!-- Loop over all data in array defined in type script part with *ngFor-->
     <ion-item *ngFor="let beacon of beaconScanner.beaconList">
       <ion-avatar item-left>
         <ion-icon name="wifi"></ion-icon>
       </ion-avatar>
-      <h1>Beacon UUID: {{beacon.id}}</h1>
-      <h1>Beacon Signal: {{beacon.signal}}</h1>
+      <h1>UUID: {{beacon.id}}</h1>
+      <h1>Signal: {{beacon.signal}}</h1>
     </ion-item>
   </ion-item>
 </ion-content>

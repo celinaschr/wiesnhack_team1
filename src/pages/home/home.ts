@@ -18,7 +18,7 @@ export class HomePage {
     public beaconScanner:BeaconScannerProvider,
     public restApi:RestApiProvider)
   {
-    this.userName = "Peep";
+    this.userName = "Superman";
   }
 
   //Init interval funtions on view load
@@ -26,7 +26,7 @@ export class HomePage {
     //start scanning
     this.beaconScanner.platformDetection();
     //console.debug("View did load Home.ts");
-    setInterval(()=>this.intervalFunction(),5000);
+    setInterval(()=>this.intervalFunction(),2000);
   }
 
   intervalFunction()

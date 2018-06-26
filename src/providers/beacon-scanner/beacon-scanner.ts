@@ -79,7 +79,7 @@ export class BeaconScannerProvider {
           //Register Case
           if(pluginResult.beacons[i].rssi >= -85)
           {
-            console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
+            //console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
             this.beaconRepopulateList(this, pluginResult);
           }
           else
@@ -111,7 +111,9 @@ export class BeaconScannerProvider {
       (pluginResult: IBeaconPluginResult) =>
       {
         if(pluginResult.region.identifier)
-        console.debug("LEFT region " + pluginResult.region.identifier);
+          console.debug("LEFT region " + pluginResult.region.identifier);
+
+        this.cleanBeaconList();
       }
     );
     console.debug("didExitRegion subscribed");

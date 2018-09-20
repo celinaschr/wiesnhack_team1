@@ -12,7 +12,8 @@
       <ion-input [(ngModel)]="userName"></ion-input>
   </ion-item>
   <ion-item>
-    <button ion-button (click)=" btnRestCall()">Contact Backend</button>
+    <button ion-button (click)=" btnRestPush()">Push Users to Backend</button>
+    <button ion-button (click)=" btnRestPull()">Pull Users from Backend</button>
     <ion-item *ngFor="let user of restApi.resultUsers">
         <ion-avatar item-left>
             <ion-icon name="ios-contact"></ion-icon>

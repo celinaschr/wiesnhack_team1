@@ -50,9 +50,21 @@ export class HomePage {
     console.debug("Started scanning for beacons");
   }
 
-  btnRestCall()
+  btnRestPull()
   {
     this.restApi.getAllUsersInRooms();
     console.debug("Rest call executed");
+  }
+
+  btnRestPush()
+  {
+    if(this.beaconScanner.beaconList.length > 0)
+    {
+      this.restApi.registerUserInRoom(this.userName,this.beaconScanner.beaconList[0].id);
+    }
+    else
+    {
+      this.restApi.deregisterUser(this.userName);
+    }
   }
 }

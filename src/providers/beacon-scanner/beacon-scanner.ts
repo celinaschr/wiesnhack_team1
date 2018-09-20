@@ -4,7 +4,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Beacon } from './../../interfaces/beaconModel';
 
 //enable cordova platform in this context (used to access wildcard UUID)
-declare var cordova: any;
+//declare var cordova: any;
 
 @Injectable()
 export class BeaconScannerProvider {
@@ -47,13 +47,12 @@ export class BeaconScannerProvider {
     let delegate = this.beacon.Delegate();
     console.debug("Beacon delegate created");
 
-    //let region = this.beacon.BeaconRegion('SomeBeacon', cordova.plugins.locationManager.BeaconRegion.WILDCARD_UUID);
-    console.debug("Beacon region created with wildcard id");
-    let region = this.beacon.BeaconRegion('deskBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
-
+    //create new beacon region, that is identified by a beacons UUID
+    let region = this.beacon.BeaconRegion('aBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
+  
     // Subscribe to some of the delegate's event handlers
-    this.registerEventEnterRegion(delegate);
-    this.registerEventExitRegion(delegate);
+    //this.registerEventEnterRegion(delegate);
+    //this.registerEventExitRegion(delegate);
     this.registerEventsRangeBeaconInRegion(delegate);
 
     //Start
@@ -74,20 +73,13 @@ export class BeaconScannerProvider {
   {
     del.didRangeBeaconsInRegion().subscribe(
       (pluginResult: IBeaconPluginResult) => {
+        
+        this.beaconRepopulateList(this, pluginResult);
+
         for(let i=0; i < pluginResult.beacons.length; i++)
         {
           console.debug("Ranged beacon: " + pluginResult.beacons[i].uuid);
           console.debug("Signal strength: " + pluginResult.beacons[i].rssi);
-
-          //Register Case
-          if(pluginResult.beacons[i].rssi >= -85)
-          {
-            this.beaconRepopulateList(this, pluginResult);
-          }
-          else
-          {
-            this.cleanBeaconList();
-          }
         }
       },
       (error: any) => console.error(`Failure during ranging: `, error)
@@ -115,7 +107,7 @@ export class BeaconScannerProvider {
         if(pluginResult.region.identifier)
           console.debug("LEFT region " + pluginResult.region.identifier);
 
-        this.cleanBeaconList();
+        //this.cleanBeaconList();
       }
     );
     console.debug("didExitRegion subscribed");
@@ -156,12 +148,17 @@ export class BeaconScannerProvider {
   }
 
   addBeacon(uuid: string, signal: string) {
-    this.zone.run(() => { this.beaconList.push({ id: uuid, signal: signal }); });
+    this.zone.run(() => {
+       this.beaconList.push({ id: uuid, signal: signal }); 
+      });
   }
 
   cleanBeaconList() {
     while (this.beaconList.length > 0) {
-      this.beaconList.pop();
+      this.zone.run(() => {
+        this.beaconList.pop(); 
+       });
+      
     }
   }
 }

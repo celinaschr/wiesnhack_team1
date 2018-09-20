@@ -47,9 +47,9 @@ export class BeaconScannerProvider {
     let delegate = this.beacon.Delegate();
     console.debug("Beacon delegate created");
 
-    let region = this.beacon.BeaconRegion('SomeBeacon', cordova.plugins.locationManager.BeaconRegion.WILDCARD_UUID);
+    //let region = this.beacon.BeaconRegion('SomeBeacon', cordova.plugins.locationManager.BeaconRegion.WILDCARD_UUID);
     console.debug("Beacon region created with wildcard id");
-    //let region = this.beacon.BeaconRegion('deskBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
+    let region = this.beacon.BeaconRegion('deskBeacon', 'ACFD065E-C3C0-11E3-9BBE-1A514932AC01');
 
     // Subscribe to some of the delegate's event handlers
     this.registerEventEnterRegion(delegate);
@@ -76,10 +76,12 @@ export class BeaconScannerProvider {
       (pluginResult: IBeaconPluginResult) => {
         for(let i=0; i < pluginResult.beacons.length; i++)
         {
+          console.debug("Ranged beacon: " + pluginResult.beacons[i].uuid);
+          console.debug("Signal strength: " + pluginResult.beacons[i].rssi);
+
           //Register Case
           if(pluginResult.beacons[i].rssi >= -85)
           {
-            //console.debug("Beacon " + pluginResult.beacons[i].uuid + " in close range");
             this.beaconRepopulateList(this, pluginResult);
           }
           else

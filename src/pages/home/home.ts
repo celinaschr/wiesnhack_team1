@@ -24,9 +24,9 @@ export class HomePage {
   //Init interval funtions on view load
   ionViewDidLoad(){
     //start scanning
-    this.beaconScanner.platformDetection();
+    //this.beaconScanner.platformDetection();
     //console.debug("View did load Home.ts");
-    setInterval(()=>this.intervalFunction(),2000);
+    //setInterval(()=>this.intervalFunction(),2000);
   }
 
   intervalFunction()

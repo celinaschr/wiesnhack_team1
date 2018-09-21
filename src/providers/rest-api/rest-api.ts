@@ -11,21 +11,7 @@ export class RestApiProvider
   restResult:Observable<any>;
   resultUsers:User[] = [];
 
-
   constructor(public client: HttpClient){}
-
-  getPosition(){
-    //warteschlangenposition 
-    //muss über Backend kommen
-    var position;
-    position = 5;
-    return position;
-
-  }
-
-  sendPeeSignal(){
-    //Signal für pipi an backend
-  }
 
   getAllUsersInRooms()
   {
@@ -58,7 +44,7 @@ export class RestApiProvider
         console.debug("Post sent");
       });
   }
-
+  //Once the person is no longer reachable 
   deregisterUser(userId:string)
   {
     console.debug("Trying to deregister user "+userId);

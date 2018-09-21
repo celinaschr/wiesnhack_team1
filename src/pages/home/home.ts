@@ -87,7 +87,7 @@ export class HomePage {
   btnHeretoPee()
   {
     this.beaconScanner.platformDetection();
-    console.debug("No toilette close to you");
+    console.debug("No toilet close to you");
     if(this.beaconScanner.beaconList.length > 0){
       this.restApi.registerUserInRoom(this.userName, this.beaconScanner.beaconList[0].id);
     }

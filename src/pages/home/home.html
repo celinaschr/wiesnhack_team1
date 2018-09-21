@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title center>
       Ich muss Pipi!
     </ion-title>
   </ion-navbar>
@@ -17,7 +17,7 @@
   <ion-row>
       <ion-col>
           <button ion-item color="danger" (click)=" btnNeedtoPee()" round large>Ich muss Pipi!
-            <!--  <img [src]="//assets/imgs/pipi.png" alt="NeedtoPee" />-->
+            
             </button>
         </ion-col>
   </ion-row>
@@ -27,7 +27,6 @@
       <ion-icon>
           <h4 ion-text color="secondary">Du stehst in der Schlange an Platz</h4>
           <h2>{{restApi.resultPosition}}</h2> 
-       
       </ion-icon>
   </ion-col>
 </ion-row>
@@ -35,20 +34,20 @@
 
 <ion-row>
   <ion-col>
-      <ion-item>
-          <h2> Klo schon in der Nähe? Bitte hier drücken</h2>
-          <button ion-button color="primary" (click)="btnHeretoPee()" round outline >Bin da!</button>
+     
+          <h2 ion-text color="secondary"> Klo schon in der Nähe? Bitte hier drücken</h2>
+          <button ion-button color="primary" (click)="btnHeretoPee()" round outline large >Bin da!</button>
 
           <!-- define the whole row as a button so the user can select and click it-->
           <!-- Loop over all data in array defined in type script part with *ngFor-->
           <ion-item *ngFor="let beacon of beaconScanner.beaconList">
             <ion-avatar item-left>
-              <ion-icon name="wifi"></ion-icon>
+              <ion-icon name="pint"></ion-icon>
             </ion-avatar>
             <h1>UUID: {{beacon.id}}</h1>
             <h1>Signal: {{beacon.signal}}</h1>
           </ion-item>
-        </ion-item>
+        
   </ion-col>
 </ion-row>
 

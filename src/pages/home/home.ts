@@ -11,6 +11,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
   userName:string;
+  position: number;
 
   constructor(
     public navCtrl: NavController,
@@ -19,7 +20,16 @@ export class HomePage {
     public restApi:RestApiProvider)
   {
     this.userName = "Superman";
+    this.getPosition();
   }
+
+  getPosition(){
+    this.restApi.getPosition()
+    .then(data =>{ this.position = data;
+    });
+  }
+
+
 
   //Init interval funtions on view load
   ionViewDidLoad(){

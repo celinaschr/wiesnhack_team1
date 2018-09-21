@@ -7,28 +7,21 @@
 </ion-header>
 
 <ion-content padding>
+
   <ion-item>
       <ion-label color="primary">Type your name</ion-label>
       <ion-input [(ngModel)]="userName"></ion-input>
   </ion-item>
+
   <ion-item>
-    <button ion-button (click)=" btnRestPush()">Push Users to Backend</button>
-    <button ion-button (click)=" btnNeedtoPee()">Ich muss Pipi!
-      <img [src]="//assets/imgs/pipi.png" alt="NeedtoPee" />
+    <button ion-button color="danger" (click)=" btnNeedtoPee()" round large>Ich muss Pipi!
+    <!--  <img [src]="//assets/imgs/pipi.png" alt="NeedtoPee" />-->
     </button>
-    <!-- Button Pipi mit GIF? -->
-    
-    <button ion-button (click)=" btnRestPull()">Pull Users from Backend</button>
-    <ion-item *ngFor="let user of restApi.resultUsers">
-        <ion-avatar item-left>
-            <ion-icon name="ios-contact"></ion-icon>
-          </ion-avatar>
-      <h1>User: {{user.userId}}</h1>
-      <h1>Room: {{user.toiletId}}</h1>
-    </ion-item>
   </ion-item>
+
+  
   <ion-item>
-    <h2> Platform is {{beaconScanner.platformName}}</h2>
+    <h2> Klo schon in der Nähe? Bitte hier drücken</h2>
     <button ion-button (click)="btnHeretoPee()">Bin da!</button>
     <!-- define the whole row as a button so the user can select and click it-->
     <!-- Loop over all data in array defined in type script part with *ngFor-->

@@ -11,7 +11,6 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
   userName:string;
-  position: number;
 
   constructor(
     public navCtrl: NavController,
@@ -20,16 +19,7 @@ export class HomePage {
     public restApi:RestApiProvider)
   {
     this.userName = "Superman";
-    this.getPosition();
   }
-
-  getPosition(){
-    this.restApi.getPosition()
-    .then(data =>{ this.position = data;
-    });
-  }
-
-
 
   //Init interval funtions on view load
   ionViewDidLoad(){
@@ -90,6 +80,8 @@ export class HomePage {
     console.debug("No toilet close to you");
     if(this.beaconScanner.beaconList.length > 0){
       this.restApi.registerUserInRoom(this.userName, this.beaconScanner.beaconList[0].id);
+    }else{
+      this.restApi.deregisterUser(this.userName);
     }
   }
 }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class RestApiProvider
 {
-  serviceUrl = "https://peoplecontrollerapicore.azurewebsites.net/api/Position";
+  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/values/&lt;Identity-No&gt;";
 
   restResult:Observable<any>;
   resultUsers:User[] = [];

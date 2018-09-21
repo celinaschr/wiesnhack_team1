@@ -57,4 +57,29 @@
 
 
 
+<<<<<<< HEAD
+=======
+  <ion-icon>
+      <ion-label color="primary">Du stehst in der Schlange an Platz</ion-label>
+      <h2> {{5}}</h2> 
+
+  </ion-icon>
+
+
+  <ion-item>
+    <h2> Klo schon in der Nähe? Bitte hier drücken</h2>
+    <button ion-button (click)="btnHeretoPee()">Bin da!</button>
+
+
+    <!-- define the whole row as a button so the user can select and click it-->
+    <!-- Loop over all data in array defined in type script part with *ngFor-->
+    <ion-item *ngFor="let beacon of beaconScanner.beaconList">
+      <ion-avatar item-left>
+        <ion-icon name="wifi"></ion-icon>
+      </ion-avatar>
+      <h1>UUID: {{beacon.id}}</h1>
+      <h1>Signal: {{beacon.signal}}</h1>
+    </ion-item>
+  </ion-item>
+>>>>>>> 5223aa72eb3eb4a64bdc48bbe62af759d748d5c0
 </ion-content>

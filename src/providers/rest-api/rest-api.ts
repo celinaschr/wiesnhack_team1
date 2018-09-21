@@ -8,7 +8,7 @@ import { unescapeIdentifier } from '@angular/compiler';
 @Injectable()
 export class RestApiProvider
 {
-  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/values/";
+  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/values/GetNewPosition/";
 
   restResult:Observable<any>;
   resultUsers:User[] = [];

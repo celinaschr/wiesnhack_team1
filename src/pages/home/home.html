@@ -13,16 +13,18 @@
   </ion-item>
   <ion-item>
     <button ion-button (click)=" btnRestPush()">Push Users to Backend</button>
-    <button ion-button (click)=" btnNeedtoPee()">Ich muss Pipi!</button>
+    <button ion-button (click)=" btnNeedtoPee()">Ich muss Pipi!
+      <img [src]="/assets/imgs/pipi.png" alt="NeedtoPee" />
+    </button>
     <!-- Button Pipi mit GIF? -->
-    <img [src]="/assets/imgs/pipi.png" alt="NeedtoPee" />
+    
     <button ion-button (click)=" btnRestPull()">Pull Users from Backend</button>
     <ion-item *ngFor="let user of restApi.resultUsers">
         <ion-avatar item-left>
             <ion-icon name="ios-contact"></ion-icon>
           </ion-avatar>
       <h1>User: {{user.userId}}</h1>
-      <h1>Room: {{user.roomName}}</h1>
+      <h1>Room: {{user.toiletID}}</h1>
     </ion-item>
   </ion-item>
   <ion-item>

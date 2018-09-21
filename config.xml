@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BleTracker</name>
-    <description>An awesome iBeacon position tracking app</description>
+    <description>A faster Way to Pee</description>
     <author email="henning.bertsch@q-perior.com" href="https://www.q-perior.com/">Q_PERIOR</author>
     <content src="index.html" />
     <access origin="*" />

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class RestApiProvider
 {
-  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/values/&lt;Identity-No&gt;";
+  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/;";
 
   restResult:Observable<any>;
   resultUsers:User[] = [];
@@ -18,7 +18,7 @@ export class RestApiProvider
     //warteschlangenposition 
     //muss über Backend kommen
     var position;
-    position = 5;
+    position = this.client.get<User>(this.serviceUrl, {responseType:'json'});
     return position;
 
   }

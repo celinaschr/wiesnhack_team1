@@ -12,18 +12,11 @@ export class RestApiProvider
 
   restResult:Observable<any>;
   resultUsers:User[] = [];
-
+  resultPosition: string;
 
   constructor(public client: HttpClient){}
 
-  getPosition(){
-    //warteschlangenposition 
-    //muss über Backend kommen
-    var position;
-    position = this.client.get<User>(this.serviceUrl, {responseType:'json'});
-    return position;
-
-  }
+  
 
   sendPeeSignal(){
     //Signal für pipi an backend
@@ -79,7 +72,16 @@ export class RestApiProvider
 
   alineInQueue(userId:string)
   {
-    this.client.get(this.serviceUrl + userId, {responseType:'json'});
+    this.restResult = this.client.get(this.serviceUrl + userId, {responseType:'json'});
+    
+    this.restResult.subscribe(data =>
+      {
+        this.resultPosition = data;
+        console.debug("Received " + this.resultPosition.length + " users");
+        // this.resultUsers.forEach(element => {
+        //   console.debug("User Name : "+element.userId);
+        // });
+      })
   }
 
 }

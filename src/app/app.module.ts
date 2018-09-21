@@ -1,3 +1,4 @@
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -37,7 +38,8 @@ import { RestApiProvider } from './../providers/rest-api/rest-api';
     IBeacon,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BeaconScannerProvider,
-    RestApiProvider
+    RestApiProvider, 
+    UniqueDeviceID
   ]
 })
 export class AppModule {}

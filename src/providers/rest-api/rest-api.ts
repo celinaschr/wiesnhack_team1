@@ -16,6 +16,7 @@ export class RestApiProvider
 
   getPosition(){
     //warteschlangenposition 
+    //muss über Backend kommen
     var position;
     position = 5;
     return position;

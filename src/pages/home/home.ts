@@ -2,6 +2,7 @@ import { RestApiProvider } from './../../providers/rest-api/rest-api';
 import { BeaconScannerProvider } from './../../providers/beacon-scanner/beacon-scanner';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 
 @Component
 ({
@@ -16,7 +17,8 @@ export class HomePage {
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
-    public restApi:RestApiProvider)
+    public restApi:RestApiProvider
+    public uniqueDeviceID: UniqueDeviceID)
   {
     this.userName = "Superman";
   }
@@ -68,6 +70,7 @@ export class HomePage {
       this.restApi.deregisterUser(this.userName);
     }
   }
+
 
   btnNeedtoPee()
   {

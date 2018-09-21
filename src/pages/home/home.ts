@@ -12,15 +12,18 @@ import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 export class HomePage {
 
   userName:string;
+  uniqueDeviceID: string;
 
   constructor(
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
     public restApi:RestApiProvider,
-    public uniqueDeviceID: UniqueDeviceID)
+    /*public uniqueDeviceID: UniqueDeviceID*/)
   {
-    this.userName = "Superman";
+    this.userName = `Supermann`;
+    //this.uniqueDeviceID = UniquieDeviceID().toString()
+    this.uniqueDeviceID = Math.random().toString();
   }
 
   //Init interval funtions on view load
@@ -75,7 +78,8 @@ export class HomePage {
   btnNeedtoPee()
   {
     //Add me to backend
-    this.restApi.alineInQueue((this.uniqueDeviceID.toString()));
+    
+    this.restApi.alineInQueue(this.uniqueDeviceID);
   }
 
   btnHeretoPee()

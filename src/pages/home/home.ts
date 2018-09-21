@@ -17,7 +17,7 @@ export class HomePage {
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
-    public restApi:RestApiProvider
+    public restApi:RestApiProvider,
     public uniqueDeviceID: UniqueDeviceID)
   {
     this.userName = "Superman";

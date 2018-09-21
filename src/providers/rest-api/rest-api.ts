@@ -11,7 +11,21 @@ export class RestApiProvider
   restResult:Observable<any>;
   resultUsers:User[] = [];
 
+
   constructor(public client: HttpClient){}
+
+  getPosition(){
+    //warteschlangenposition 
+    //muss über Backend kommen
+    var position;
+    position = 5;
+    return position;
+
+  }
+
+  sendPeeSignal(){
+    //Signal für pipi an backend
+  }
 
   getAllUsersInRooms()
   {

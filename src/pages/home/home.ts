@@ -75,6 +75,7 @@ export class HomePage {
   btnNeedtoPee()
   {
     //Add me to backend
+    this.restApi.alineInQueue((this.uniqueDeviceID.toString()));
   }
 
   btnHeretoPee()

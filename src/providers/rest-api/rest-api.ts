@@ -1,12 +1,14 @@
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { User } from './../../interfaces/userModel';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { unescapeIdentifier } from '@angular/compiler';
 
 @Injectable()
 export class RestApiProvider
 {
-  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/;";
+  serviceUrl = "https://peeplaningapp.azurewebsites.net/api/values/";
 
   restResult:Observable<any>;
   resultUsers:User[] = [];
@@ -73,6 +75,11 @@ export class RestApiProvider
       {
         console.debug("Delete sent");
       });
+  }
+
+  alineInQueue(userId:string)
+  {
+    this.client.get(this.serviceUrl + userId, {responseType:'json'});
   }
 
 }

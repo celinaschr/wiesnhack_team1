@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Track me if you can!
+      Ich muss Pipi!
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,6 +13,9 @@
   </ion-item>
   <ion-item>
     <button ion-button (click)=" btnRestPush()">Push Users to Backend</button>
+    <button ion-button (click)=" btnNeedtoPee()">Ich muss Pipi!</button>
+    <!-- Button Pipi mit GIF? -->
+    <img [src]="/assets/imgs/pipi.png" alt="NeedtoPee" />
     <button ion-button (click)=" btnRestPull()">Pull Users from Backend</button>
     <ion-item *ngFor="let user of restApi.resultUsers">
         <ion-avatar item-left>
@@ -24,7 +27,7 @@
   </ion-item>
   <ion-item>
     <h2> Platform is {{beaconScanner.platformName}}</h2>
-    <button ion-button (click)="btnStartScanning()">Start Scanning</button>
+    <button ion-button (click)="btnHeretoPee()">Bin da!</button>
     <!-- define the whole row as a button so the user can select and click it-->
     <!-- Loop over all data in array defined in type script part with *ngFor-->
     <ion-item *ngFor="let beacon of beaconScanner.beaconList">

@@ -17,7 +17,7 @@ export class HomePage {
     public navCtrl: NavController,
     public NavParams:NavParams,
     public beaconScanner:BeaconScannerProvider,
-    public restApi:RestApiProvider
+    public restApi:RestApiProvider,
     public uniqueDeviceID: UniqueDeviceID)
   {
     this.userName = "Superman";
@@ -75,6 +75,7 @@ export class HomePage {
   btnNeedtoPee()
   {
     //Add me to backend
+    this.restApi.alineInQueue((this.uniqueDeviceID.toString()));
   }
 
   btnHeretoPee()

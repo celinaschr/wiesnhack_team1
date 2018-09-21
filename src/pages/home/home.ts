@@ -44,6 +44,7 @@ export class HomePage {
   }
 
   //Use provider to start sensing beacons
+  //User is at the restroom and wants to get it
   btnStartScanning()
   {
     this.beaconScanner.platformDetection();
@@ -65,6 +66,20 @@ export class HomePage {
     else
     {
       this.restApi.deregisterUser(this.userName);
+    }
+  }
+
+  btnNeedtoPee()
+  {
+    //Add me to backend
+  }
+
+  btnHeretoPee()
+  {
+    this.beaconScanner.platformDetection();
+    console.debug("No toilette close to you");
+    if(this.beaconScanner.beaconList.length > 0){
+      this.restApi.registerUserInRoom(this.userName, this.beaconScanner.beaconList[0].id);
     }
   }
 }

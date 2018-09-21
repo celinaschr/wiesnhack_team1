@@ -7,18 +7,58 @@
 </ion-header>
 
 <ion-content padding>
+<ion-grid>
+  <ion-row>
+    <ion-col> 
+      <h3 ion-text color="danger">Wenn man Bier ins Licht hält, sieht es aus wie flüssiges Glück.</h3>
+    </ion-col>
+  </ion-row>
+    
+  <ion-row>
+      <ion-col>
+          <button ion-item color="danger" (click)=" btnNeedtoPee()" round large>Ich muss Pipi!
+            <!--  <img [src]="//assets/imgs/pipi.png" alt="NeedtoPee" />-->
+            </button>
+        </ion-col>
+  </ion-row>
 
-  <ion-item>
-      <ion-label color="primary">Type your name</ion-label>
-      <ion-input [(ngModel)]="userName"></ion-input>
-  </ion-item>
+<ion-row>
+  <ion-col>
+      <ion-icon>
+          <h4 ion-text color="secondary">Du stehst in der Schlange an Platz</h4>
+          <h2>5</h2> 
+          <!-- unbedingt hier noch die Nummer -->
+      </ion-icon>
+  </ion-col>
+</ion-row>
 
-  <ion-item>
-    <button ion-button color="danger" (click)=" btnNeedtoPee()" round large>Ich muss Pipi!
-    <!--  <img [src]="//assets/imgs/pipi.png" alt="NeedtoPee" />-->
-    </button>
-  </ion-item>
 
+<ion-row>
+  <ion-col>
+      <ion-item>
+          <h2> Klo schon in der Nähe? Bitte hier drücken</h2>
+          <button ion-button color="primary" (click)="btnHeretoPee()" round outline >Bin da!</button>
+
+          <!-- define the whole row as a button so the user can select and click it-->
+          <!-- Loop over all data in array defined in type script part with *ngFor-->
+          <ion-item *ngFor="let beacon of beaconScanner.beaconList">
+            <ion-avatar item-left>
+              <ion-icon name="wifi"></ion-icon>
+            </ion-avatar>
+            <h1>UUID: {{beacon.id}}</h1>
+            <h1>Signal: {{beacon.signal}}</h1>
+          </ion-item>
+        </ion-item>
+  </ion-col>
+</ion-row>
+
+
+</ion-grid>
+
+
+
+<<<<<<< HEAD
+=======
   <ion-icon>
       <ion-label color="primary">Du stehst in der Schlange an Platz</ion-label>
       <h2> {{5}}</h2> 
@@ -41,4 +81,5 @@
       <h1>Signal: {{beacon.signal}}</h1>
     </ion-item>
   </ion-item>
+>>>>>>> 5223aa72eb3eb4a64bdc48bbe62af759d748d5c0
 </ion-content>

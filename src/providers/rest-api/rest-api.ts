@@ -26,6 +26,7 @@ export class RestApiProvider
       })
   }
 
+  //Tells us if the user is close to the bathroom
   registerUserInRoom(userId:string,beaconId:string)
   {
 
